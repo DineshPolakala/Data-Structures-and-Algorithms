@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+int fibUtil(int n, vector<int> &memo){
+    if(memo[n]!= -1)return memo[n];
+    int res;
+    if(n==0 or n==1){
+        memo[n] = n;
+        return n;
+    }
+    else{
+        res = fibUtil(n-1, memo)+fibUtil(n-2, memo);
+        memo[n]= res;
+    }
+    return memo[n];
+}
+int fib(int n){
+    vector<int> memo(n+1, -1);
+    return fibUtil(n, memo);
+}
+int main(){
+    int n = 60;
+    cout << fib(n)<<endl;
+}

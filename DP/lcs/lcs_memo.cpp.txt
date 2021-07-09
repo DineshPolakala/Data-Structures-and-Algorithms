@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<vector<int>> memo(100, vector<int>(100, -1));
+int lcsMemo(string s1, string s2,int n1,int n2){
+    if(n1 ==0 or n2 ==0){
+        memo[n1][n2]=0;
+    }
+    if(memo[n1][n2] != -1)return memo[n1][n2];
+    else if(s1[n1-1]==s2[n2-1]){
+        memo[n1][n2] = 1 + lcsMemo(s1, s2, n1-1, n2-1);
+    }
+    else{
+        memo[n1][n2] = max(lcsMemo(s1, s2, n1-1, n2), lcsMemo(s1, s2, n1, n2-1));
+    }
+    return memo[n1][n2];
+    
+}
+int LCS(string s1, string s2, int n1, int n2){
+    if(n1 ==0 or n2==0)return 0;
+    if(s1[n1-1] == s2[n2-1]){
+        return 1 + LCS(s1, s2, n1-1, n2-1);
+    }
+    return max(LCS(s1, s2, n1-1, n2), LCS(s1, s2, n1, n2-1));
+}
+
+int main(){
+   string s1 = "saturdayjhsqhggsjvd", s2 = "sundaygwhwqutfqwd";
+   int n1 = s1.length();
+   int n2 = s2.length();
+   cout << lcsMemo(s1, s2, n1, n2);
+}
