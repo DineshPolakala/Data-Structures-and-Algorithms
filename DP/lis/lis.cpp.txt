@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+// given an array of integers. find the length of the largest increasing sub sequence.
+// Eg: {3,4,7,2,1,11,10,14}
+// ans = 5 ie. {3,4,7,11,14} or {3,4,7,10,14} so max length is 5
+
+int LIS(int *arr, int n){
+    int lis[n];
+    lis[0] = 1;
+    for(int i=1; i<n ; i++){
+        lis[i]=1;
+        for(int j =0; j<i; j++){
+            if(arr[j] < arr[i]){
+                lis[i] = max(lis[i], lis[j]+1);
+            }
+        }
+    }
+    int res = lis[0];
+    for(int i =1; i<n; i++){
+        res =max(res, lis[i]);
+    }
+    return res;
+}
+
+int main(){
+    int arr[] = {6,2,9,3,14};
+    int size = sizeof(arr)/sizeof(int);
+    cout<< LIS(arr, size);
+}
