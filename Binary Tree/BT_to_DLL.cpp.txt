@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* left;
+    node* right;
+    
+    node(int val){
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+void printList(node *node)
+{
+    while (node!=NULL)
+    {
+        cout << node->data << " ";
+        node = node->right;
+    }
+}
+void inOrder(node* node){
+    if(node == NULL)return ;
+    inOrder(node->left);
+    cout<< node->data<< " ";
+    inOrder(node->right);
+}
+
+void convert(node* root, node* &head){
+    if(root == NULL)return;
+    static node* prev = NULL;
+    convert(root->left, head);
+    if(prev == NULL){
+        head = root;
+    }
+    else{
+        prev->right = root;
+        root->left = prev;
+    }
+    prev = root;
+    convert(root->right, head);
+}
+int main(){
+    
+    node *root        = new node(10);
+    root->left        = new node(12);
+    root->right       = new node(15);
+    root->left->left  = new node(25);
+    root->left->right = new node(30);
+    root->right->left = new node(36);
+ 
+    // Convert to DLL
+    node *head = NULL;
+    inOrder(root);
+    convert(root, head);
+ 
+    // Print the converted list
+    cout << endl;
+    printList(head);
+ 
+    return 0;
+}
