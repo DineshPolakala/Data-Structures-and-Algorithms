@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* left;
+    node* right;
+    
+    node(int val){
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+
+
+node *lca(node* root, int p,int q){
+    if(root == NULL )return root;
+    if(root->data == p or root->data == q){
+        return root;
+    }
+    
+    node *left = lca(root->left , p, q);
+    node* right = lca(root->right, p, q);
+    if(left != NULL and right != NULL)return root;
+    else{
+        return left ? left : right;
+    }
+}
+int main(){
+    
+    node *root        = new node(10);
+    root->left        = new node(12);
+    root->right       = new node(15);
+    root->left->left  = new node(25);
+    root->left->right = new node(30);
+    root->right->left = new node(36);
+ 
+    
+    node *head = NULL;
+    
+ 
+    
+    node *ans = lca(root, 30, 25);
+    cout << ans->data<<endl;
+    return 0;
+}
